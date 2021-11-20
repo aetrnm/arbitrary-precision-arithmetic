@@ -10,7 +10,7 @@ class BigNumber {
     }
     this.value = value;
     this.negativeness = negativeness;
-    this.arr = Array(maxNumberLength).fill(0);
+    this.arr = Array(100).fill(0);
     for (let i = value.length - 1; i >= 0; i--) {
       this.arr[i] = parseInt(this.value[value.length - i - 1]);
     }
@@ -25,7 +25,7 @@ class BigNumber {
     let carry = 0;
     this.arr = [...first.arr];
     [].slice.call(arguments, 1).forEach(function (second) {
-      for (let i = 0; i < maxNumberLength; i++) {
+      for (let i = 0; i < 100; i++) {
         let that = this.arr[i] + second.arr[i] + carry;
         this.arr[i] = that % 10;
         carry = Math.floor(that / 10);
@@ -48,7 +48,8 @@ class BigNumber {
 
   toString() {
     if (this.negativeness === false) {
-      return this.arr.reverse().join('').replace(/^0+/, '');
+      let strToReturn = this.arr.reverse().join('').replace(/^0+/, '');
+      return strToReturn === '' ? '0' : strToReturn;
     } else if (this.negativeness === true) {
       return '-' + this.arr.reverse().join('').replace(/^0+/, '');
     }

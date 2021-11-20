@@ -1,23 +1,11 @@
-import re
-from BigNumber import BigNumber
+from BigNumberCreator import createBigNumber
 
+with open('input.txt') as f:
+    contents = f.readlines()
 
-def stringContainsValidNumber(string):
-    pattern = re.compile("^[-+]?\\d*$")
-    return pattern.match(string)
+inputValue1 = contents[0].strip()
+inputValue2 = contents[1].strip()
+num1 = createBigNumber(inputValue1)
+num2 = createBigNumber(inputValue2)
 
-
-def createBigNumber(inputValue):
-    if stringContainsValidNumber(inputValue):
-        if inputValue[0] == '-':
-            return BigNumber(inputValue[1:], True)
-        return BigNumber(inputValue)
-
-    raise Exception('Entered number is invalid!')
-
-
-a = input()
-b = input()
-num1 = BigNumber(a)
-num2 = BigNumber(b)
-print(num1 + num2)
+print(num1 > num2)
