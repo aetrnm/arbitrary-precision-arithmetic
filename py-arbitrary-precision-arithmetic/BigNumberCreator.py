@@ -3,7 +3,7 @@ from BigNumber import BigNumber
 
 
 def stringContainsValidNumber(string):
-    pattern = re.compile("^[-+]?\\d*$")
+    pattern = re.compile('^[-+]?\\d*$')
     return pattern.match(string)
 
 
