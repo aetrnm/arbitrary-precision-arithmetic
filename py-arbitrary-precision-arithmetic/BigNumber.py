@@ -1,5 +1,6 @@
 import copy
 import math
+import typing
 
 
 class BigNumber:
@@ -56,22 +57,26 @@ class BigNumber:
         else:
             return ans
 
-    def __mul__(self,  secondNumber):
+    @typing.overload
+    def __mul__(self, secondNumber):
         ans = BigNumber('0')
         aLength = math.ceil(self.length / 2)
         bLength = math.ceil(secondNumber.length / 2)
 
         for i in range(aLength):
             for j in range(bLength):
-                ans.arr[i+j] += self.arr[i] * secondNumber.arr[j]
+                ans.arr[i + j] += self.arr[i] * secondNumber.arr[j]
 
         for i in range(BigNumber.maxNumberLength - 1):
-            ans.arr[i+1] += ans.arr[i] // BigNumber.base
+            ans.arr[i + 1] += ans.arr[i] // BigNumber.base
             ans.arr[i] %= BigNumber.base
 
         if self.negativeness != secondNumber.negativeness:
             ans.negativeness = True
         return ans
+
+    def __mul__(self, number: int):
+        pass
 
     def __str__(self) -> str:
         if not self.negativeness:

@@ -8,5 +8,5 @@ inputValue2 = contents[1].strip()
 num1 = createBigNumber(inputValue1)
 num2 = createBigNumber(inputValue2)
 
-print(num1 * num2)
+print(num1 + num2)
 
