@@ -1,5 +1,5 @@
 import re
-from BigNumber import BigNumber
+from BigNumberTwosComplement import BigNumber
 
 
 def stringContainsValidNumber(string):
@@ -9,8 +9,6 @@ def stringContainsValidNumber(string):
 
 def createBigNumber(inputValue):
     if stringContainsValidNumber(inputValue):
-        if inputValue[0] == '-':
-            return BigNumber(inputValue[1:], True)
         return BigNumber(inputValue)
 
     raise Exception('Entered number is invalid!')

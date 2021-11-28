@@ -9,4 +9,3 @@ num1 = createBigNumber(inputValue1)
 num2 = createBigNumber(inputValue2)
 
 print(num1 + num2)
-
