@@ -24,7 +24,7 @@ class BigNumber:
         negative = value[0] == '-'
         if negative:
             self.arr = to_array(value[1:])
-            self.twos_complement()
+            self.twosComplement()
         else:
             self.arr = to_array(value)
 
@@ -39,14 +39,45 @@ class BigNumber:
         return ans
 
     def __sub__(self, secondNumber):
-        second = deepcopy(secondNumber)
-        second.twos_complement()
-        return self + second
+        secondNumberCopy = deepcopy(secondNumber)
+        secondNumberCopy.twosComplement()
+        return self + secondNumberCopy
+
+    def __mul__(self, secondNumber):
+        ans = BigNumber('0')
+        a = deepcopy(self)
+        b = deepcopy(secondNumber)
+        aLength = a.length
+        bLength = b.length
+
+        k = 1
+
+        if a.arr[-1] > 49:
+            a.twosComplement()
+            k *= -1
+
+        if b.arr[-1] > 49:
+            b.twosComplement()
+            k *= -1
+
+        for i in range(aLength):
+            for j in range(bLength):
+                ans.arr[i + j] += a.arr[i] * b.arr[j]
+
+        for i in range(BigNumber.capacity - 1):
+            ans.arr[i + 1] += ans.arr[i] // BigNumber.base
+            ans.arr[i] %= BigNumber.base
+
+        if k == -1:
+            ans.twosComplement()
+            return ans
+        elif k == 1:
+            return ans
 
     def __str__(self) -> str:
         if self.arr[-1] > 49:
             ans = deepcopy(self)
-            ans.twos_complement()
+            ans.twosComplement()
             strToReturn = '-' + ''.join('0' + str(x) if x < 10 else str(x) for x in reversed(ans.arr)).lstrip('0')
         else:
             strToReturn = ''.join('0' + str(x) if x < 10 else str(x) for x in reversed(self.arr)).lstrip('0')
@@ -55,7 +86,7 @@ class BigNumber:
         else:
             return strToReturn
 
-    def twos_complement(self):
+    def twosComplement(self):
         for i in range(BigNumber.capacity):
             self.arr[i] = BigNumber.base - 1 - self.arr[i]
 
