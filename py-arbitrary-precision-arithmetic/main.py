@@ -6,9 +6,11 @@ with open('input.txt') as f:
 inputValue1 = contents[0].strip()
 inputValue2 = contents[1].strip()
 num1 = createBigNumber(inputValue1)
-num2 = createBigNumber(inputValue2)
+num2 = int(inputValue2)
 
 # print(num1.arr)
 # print(num2.arr)
 
-print(num1 * num2)
+res = num1 // num2
+# print(res.arr)
+print(res)

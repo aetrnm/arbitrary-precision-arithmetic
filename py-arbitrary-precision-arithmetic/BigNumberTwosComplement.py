@@ -2,7 +2,7 @@ import math
 from copy import deepcopy
 
 
-def to_array(value: str):
+def toArray(value: str) -> list:
     arr = [0] * BigNumber.capacity
     length = math.ceil(len(value) / 2)
     if len(value) % 2 == 1:
@@ -23,10 +23,10 @@ class BigNumber:
         self.length = math.ceil(len(value) / 2)
         negative = value[0] == '-'
         if negative:
-            self.arr = to_array(value[1:])
+            self.arr = toArray(value[1:])
             self.twosComplement()
         else:
-            self.arr = to_array(value)
+            self.arr = toArray(value)
 
     def __add__(self, secondNumber):
         carry = 0
@@ -47,32 +47,41 @@ class BigNumber:
         ans = BigNumber('0')
         a = deepcopy(self)
         b = deepcopy(secondNumber)
-        aLength = a.length
-        bLength = b.length
-
-        k = 1
-
-        if a.arr[-1] > 49:
-            a.twosComplement()
-            k *= -1
-
-        if b.arr[-1] > 49:
-            b.twosComplement()
-            k *= -1
+        aLength = BigNumber.capacity
+        bLength = BigNumber.capacity
 
         for i in range(aLength):
             for j in range(bLength):
-                ans.arr[i + j] += a.arr[i] * b.arr[j]
+                if i + j < BigNumber.capacity:
+                    ans.arr[i + j] += a.arr[i] * b.arr[j]
 
         for i in range(BigNumber.capacity - 1):
             ans.arr[i + 1] += ans.arr[i] // BigNumber.base
             ans.arr[i] %= BigNumber.base
+        ans.arr[-1] %= BigNumber.base
 
-        if k == -1:
-            ans.twosComplement()
-            return ans
-        elif k == 1:
-            return ans
+        return ans
+
+    def __truediv__(self, divisor: int):
+        # truediv: 5/2 == 2.5
+        pass
+
+    def __floordiv__(self, divisor: int):
+        # floordiv: 5//2 == 2
+        return self.divideOnInteger(divisor)["div"]
+
+    def __mod__(self, divisor: int) -> int:
+        # mod: 5 % 2 == 1
+        return self.divideOnInteger(divisor)["mod"]
+
+    def divideOnInteger(self, divisor: int) -> dict:
+        curA = 0
+        ans = BigNumber('0')
+        for i in range(BigNumber.capacity - 1, -1, -1):
+            curA = 100 * curA + self.arr[i]
+            ans.arr[i] = curA // divisor
+            curA %= divisor
+        return {"div": ans, "mod": curA}
 
     def __str__(self) -> str:
         if self.arr[-1] > 49:
