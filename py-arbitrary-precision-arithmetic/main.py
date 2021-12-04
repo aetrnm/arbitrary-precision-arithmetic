@@ -10,6 +10,5 @@ num1 = createBigNumber(inputValue1)
 num2 = int(inputValue2)
 
 res = num1 // num2
-# print(res)
-
-print(getQuadraticResidue(37))
+print(res)
+# print(getQuadraticResidue(37))

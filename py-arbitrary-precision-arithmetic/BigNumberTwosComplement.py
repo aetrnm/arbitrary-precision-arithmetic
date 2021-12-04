@@ -95,6 +95,9 @@ class BigNumber:
         else:
             return strToReturn
 
+    def __eq__(self, other):
+        return self.arr == other.arr
+
     def twosComplement(self):
         for i in range(BigNumber.capacity):
             self.arr[i] = BigNumber.base - 1 - self.arr[i]
