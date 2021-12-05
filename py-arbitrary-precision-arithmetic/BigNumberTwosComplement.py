@@ -7,23 +7,8 @@ class BigNumber:
     maxInputDecNumberLength = 10 ** 4
     currentMaxInputDecNumberLength = 100
 
-    def toArray(self, value: str) -> list:
-        # TODO: check capacity of input
-        arr = [0] * self.capacity
-        length = math.ceil(len(value) / 2)
-        if len(value) % 2 == 1:
-            value = '0' + value
-        arr_index = 0
-        for i in range(length - 1, -1, -1):
-            arr[arr_index] = int(value[i * 2:(i + 1) * 2])
-            arr_index += 1
-        return arr
-
-    def _getCapacity(self):
-        return self.currentMaxInputDecNumberLength // 2 + 1
-
     def __init__(self, value: str):
-        self.capacity = self._getCapacity()
+        self.capacity = self.getCapacity()
         self.length = math.ceil(len(value) / 2)
         negative = value[0] == '-'
         if negative:
@@ -66,10 +51,6 @@ class BigNumber:
 
         return ans
 
-    def __truediv__(self, divisor: int):
-        # truediv: 5/2 == 2.5
-        pass
-
     def __floordiv__(self, divisor: int):
         # floordiv: 5//2 == 2
         return self.divideOnInteger(divisor)["div"]
@@ -77,6 +58,28 @@ class BigNumber:
     def __mod__(self, divisor: int) -> int:
         # mod: 5 % 2 == 1
         return self.divideOnInteger(divisor)["mod"]
+
+    def __pow__(self, number: int):
+        a = deepcopy(self)
+        for _ in range(number - 1):
+            a *= self
+
+        return a
+
+    def toArray(self, value: str) -> list:
+        # TODO: check capacity of input
+        arr = [0] * self.capacity
+        length = math.ceil(len(value) / 2)
+        if len(value) % 2 == 1:
+            value = '0' + value
+        arr_index = 0
+        for i in range(length - 1, -1, -1):
+            arr[arr_index] = int(value[i * 2:(i + 1) * 2])
+            arr_index += 1
+        return arr
+
+    def getCapacity(self):
+        return self.currentMaxInputDecNumberLength // 2 + 1
 
     def divideOnInteger(self, divisor: int) -> dict:
         curA = 0
@@ -116,13 +119,6 @@ class BigNumber:
 
     def __ne__(self, other):
         return self.arr != other.arr
-
-    def __pow__(self, number: int):
-        a = deepcopy(self)
-        for _ in range(number - 1):
-            a *= self
-
-        return a
 
     def __gt__(self, secondNumber):  # self > secondNumber
         difference = self - secondNumber
@@ -169,16 +165,27 @@ class BigNumber:
         return bottomBorder
 
     def factorize(self) -> list:
-        # x = (a+b)(a-b) = a**2 - b**2         27
-        # a = (sqrt(x) ....)                   6
-        # a**2 - x == b**2 ?                   9
+        # x = (a+b)(a-b) = a**2 - b**2         17
+        # a = (sqrt(x) ....)                   5
+        # a**2 - x == b**2 ?                   8
         # b**2 <- full square? sqrt(b)**2 == b 3
         # x = 9 * 3 -> ans = [9, 3]
         ans = []
         a = self.getCeilIntegerSquareRoot()
         bb = a ** 2 - self
         b = bb.getCeilIntegerSquareRoot()
-        if bb == b ** 2:
-            ans.append(a + b)
-            ans.append(a - b)
+        while bb != b ** 2:
+            a.increment()
+            bb = a ** 2 - self
+            b = bb.getCeilIntegerSquareRoot()
+        f = a + b
+        s = a - b
+        if s == BigNumber('1'):
+            return [f]
+
+        for num in f.factorize():
+            ans.append(num)
+        for num in s.factorize():
+            ans.append(num)
+
         return ans

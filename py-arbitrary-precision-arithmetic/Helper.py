@@ -1,4 +1,4 @@
-def getQuadraticResidue(p: int) -> list:
+def getQuadraticResidues(p: int) -> list:
     possibleRemainders = [i for i in range(1, p)]
     quadraticResidues = [num ** 2 % p for num in possibleRemainders]
     quadraticResidues = quadraticResidues[:len(quadraticResidues)//2]

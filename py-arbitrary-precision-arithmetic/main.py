@@ -1,5 +1,5 @@
 from BigNumberCreator import createBigNumber
-from Helper import getQuadraticResidue
+from Helper import getQuadraticResidues
 
 with open('input.txt') as f:
     contents = f.readlines()
@@ -11,4 +11,4 @@ num2 = createBigNumber(inputValue2)
 
 res = num1.factorize()
 print(res)
-# print(getQuadraticResidue(37))
+# print(getQuadraticResidues(37))
