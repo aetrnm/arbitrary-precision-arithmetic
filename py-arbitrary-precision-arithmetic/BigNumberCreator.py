@@ -1,5 +1,5 @@
 import re
-from BigNumberTwosComplement import BigNumber
+from BigNumber import BigNumber
 from Exceptions import InvalidValueError
 
 
