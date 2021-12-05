@@ -1,10 +1,6 @@
 import re
 from BigNumberTwosComplement import BigNumber
-
-
-class InvalidValueError(Exception):
-    """Raised when the input value is invalid"""
-    pass
+from Exceptions import InvalidValueError
 
 
 def stringContainsValidNumber(string):

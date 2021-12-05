@@ -1,5 +1,6 @@
 import unittest
-from BigNumberCreator import createBigNumber, InvalidValueError
+from BigNumberCreator import createBigNumber
+from Exceptions import InvalidValueError
 
 
 class MyTestCase(unittest.TestCase):
@@ -41,6 +42,22 @@ class MyTestCase(unittest.TestCase):
     def test_invalidInput(self):
         with self.assertRaises(InvalidValueError):
             createBigNumber('hello')
+
+    def test_getFloorIntegerSquareRoot(self):
+        # TODO: implement
+        pass
+
+    def test_equals(self):
+        # TODO: implement
+        pass
+
+    def test_notEquals(self):
+        # TODO: implement
+        pass
+
+    def test_getSign(self):
+        # TODO: implement
+        pass
 
 
 if __name__ == '__main__':
