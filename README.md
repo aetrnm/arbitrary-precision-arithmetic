@@ -1,3 +1,3 @@
 # arbitrary-precision-arithmetic
 
-Javascript and Python realisations
+Javascript (addition only) and Python realisations
