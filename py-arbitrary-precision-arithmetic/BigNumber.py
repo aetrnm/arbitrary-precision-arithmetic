@@ -166,12 +166,13 @@ class BigNumber:
 
         return bottomBorder
 
+    # Fermat's factorization method
+    # x = (a+b)(a-b) = a**2 - b**2         17
+    # a = (sqrt(x) ....)                   5
+    # a**2 - x == b**2 ?                   8
+    # b**2 <- full square? sqrt(b)**2 == b 3
+    # x = 9 * 3 -> ans = [9, 3]
     def factorize(self) -> list:
-        # x = (a+b)(a-b) = a**2 - b**2         17
-        # a = (sqrt(x) ....)                   5
-        # a**2 - x == b**2 ?                   8
-        # b**2 <- full square? sqrt(b)**2 == b 3
-        # x = 9 * 3 -> ans = [9, 3]
         ans = []
         a = self.getCeilIntegerSquareRoot()
         bb = a ** 2 - self
