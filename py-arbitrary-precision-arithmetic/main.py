@@ -10,5 +10,5 @@ num1 = createBigNumber(inputValue1)
 num2 = createBigNumber(inputValue2)
 
 res = num1.factorize()
-print(res)
+print(sorted(res))
 # print(getQuadraticResidues(37))

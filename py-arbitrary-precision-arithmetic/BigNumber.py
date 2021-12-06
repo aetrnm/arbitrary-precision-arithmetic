@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import math
 from copy import deepcopy
 
@@ -17,7 +19,7 @@ class BigNumber:
         else:
             self.arr = self.toArray(value)
 
-    def __add__(self, secondNumber):
+    def __add__(self, secondNumber) -> BigNumber:
         carry = 0
         ans = BigNumber('0')
         for i in range(self.capacity):
@@ -27,12 +29,12 @@ class BigNumber:
 
         return ans
 
-    def __sub__(self, secondNumber):
+    def __sub__(self, secondNumber) -> BigNumber:
         secondNumberCopy = deepcopy(secondNumber)
         secondNumberCopy.twosComplement()
         return self + secondNumberCopy
 
-    def __mul__(self, secondNumber):
+    def __mul__(self, secondNumber) -> BigNumber:
         ans = BigNumber('0')
         a = deepcopy(self)
         b = deepcopy(secondNumber)
@@ -59,7 +61,7 @@ class BigNumber:
         # mod: 5 % 2 == 1
         return self.divideOnInteger(divisor)["mod"]
 
-    def __pow__(self, number: int):
+    def __pow__(self, number: int) -> BigNumber:
         a = deepcopy(self)
         for _ in range(number - 1):
             a *= self
@@ -146,7 +148,7 @@ class BigNumber:
         elif self.arr[-1] <= 49:
             return 1
 
-    def getCeilIntegerSquareRoot(self):
+    def getCeilIntegerSquareRoot(self) -> BigNumber:
         if self == BigNumber('1'):
             return BigNumber('1')
         bottomBorder = BigNumber('1')

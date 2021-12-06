@@ -56,6 +56,11 @@ class MyTestCase(unittest.TestCase):
     def test_getSignNegative(self):
         self.assertEqual(self.negativeNumber.getSign(), -1)
 
+    def test_factorization(self):
+        actual = createBigNumber('63').factorize()
+        print(type(actual))  # list
+        self.assertEqual(actual, [3, 3, 7])
+
 
 if __name__ == '__main__':
     unittest.main()
